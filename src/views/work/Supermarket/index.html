@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<form name="myForm" action="/demo/action_page.php" onsubmit="return validateForm()" method="post">
+  姓名：<input type="text" name="fname">
+  <input type="submit" value="提交">
+</form>
+</body>
+</html>
+<script>
+  function validateForm() {
+    var x = document.forms["myForm"]["fname"].value;
+    if (x == "") {
+      alert("必须填写姓名！");
+      return false;
+    }else {
+
+
+        // XMLHttpRequest对象用于在后台与服务器交换数据
+        var xhr=new XMLHttpRequest();
+        xhr.open('GET','https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx6d414da3d992f3d4&secret=c15579ae509185eb518804e7c8d0747b',false);
+        xhr.onreadystatechange=function(){
+          // readyState == 4说明请求已完成
+          if(xhr.readyState==4){
+            if(xhr.status==200 || xhr.status==304){
+              console.log(xhr.responseText);
+              fn.call(xhr.responseText);
+            }
+          }
+        }
+        xhr.send();
+
+    }
+  }
+</script>
